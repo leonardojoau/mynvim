@@ -18,3 +18,14 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
 end
+
+require('osc52').setup({
+    max_length = 0,       -- Maximum length of selection (0 for no limit)
+    silent = false,       -- Silently copy without showing a message
+    trim = false,         -- Trim text before copying
+})
+
+-- Map yank to clipboard via OSC52
+vim.keymap.set('n', '<leader>c', require('osc52').copy_operator, {expr = true})
+vim.keymap.set('n', '<leader>cc', '<leader>c_', {remap = true})
+vim.keymap.set('x', '<leader>c', require('osc52').copy_visual)
