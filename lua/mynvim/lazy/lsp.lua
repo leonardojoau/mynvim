@@ -9,10 +9,10 @@ return {
     'saadparwaiz1/cmp_luasnip',        -- Optional: LuaSnip source for nvim-cmp
   },
   config = function()
-    -- Setup Mason and ensure 'pyright' and 'rust_analyzer' are installed
+    -- Setup Mason and ensure 'pyright', 'rust_analyzer', and 'clangd' are installed
     require("mason").setup()
     require("mason-lspconfig").setup({
-      ensure_installed = { "pyright", "rust_analyzer" }
+      ensure_installed = { "pyright", "rust_analyzer", "clangd" }  -- Add clangd here
     })
 
     -- Setup nvim-cmp for autocompletion
@@ -51,6 +51,11 @@ return {
 
     -- Setup Rust LSP (rust-analyzer)
     lspconfig.rust_analyzer.setup {
+      capabilities = capabilities,
+    }
+
+    -- Setup C/C++ LSP (clangd)
+    lspconfig.clangd.setup {
       capabilities = capabilities,
     }
 
