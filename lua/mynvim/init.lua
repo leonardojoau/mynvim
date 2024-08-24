@@ -25,6 +25,11 @@ require('osc52').setup({
     trim = false,         -- Trim text before copying
 })
 
+require('nvim-autopairs').setup({
+  disable_filetype = { "TelescopePrompt" },  -- Disable autopairs in specific filetypes
+  check_ts = true,  -- Enable treesitter integration for better context-based pairing
+})
+
 -- Map yank to clipboard via OSC52
 vim.keymap.set('n', '<leader>c', require('osc52').copy_operator, {expr = true})
 vim.keymap.set('n', '<leader>cc', '<leader>c_', {remap = true})
