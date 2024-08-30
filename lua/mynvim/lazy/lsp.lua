@@ -3,16 +3,17 @@ return {
   dependencies = {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
-    'hrsh7th/nvim-cmp',               -- Add this line to ensure nvim-cmp is loaded
+    'hrsh7th/nvim-cmp',               -- nvim-cmp for autocompletion
     'hrsh7th/cmp-nvim-lsp',            -- LSP source for nvim-cmp
-    'L3MON4D3/LuaSnip',                -- Optional: LuaSnip for snippet support
-    'saadparwaiz1/cmp_luasnip',        -- Optional: LuaSnip source for nvim-cmp
+    'L3MON4D3/LuaSnip',                -- LuaSnip for snippet support (optional)
+    'saadparwaiz1/cmp_luasnip',        -- LuaSnip source for nvim-cmp (optional)
+    'jose-elias-alvarez/null-ls.nvim', -- Add null-ls.nvim here
   },
   config = function()
     -- Setup Mason and ensure 'pyright', 'rust_analyzer', and 'clangd' are installed
     require("mason").setup()
     require("mason-lspconfig").setup({
-      ensure_installed = { "pyright", "rust_analyzer", "clangd" }  -- Add clangd here
+      ensure_installed = { "pyright", "rust_analyzer", "clangd" }
     })
 
     -- Setup nvim-cmp for autocompletion
@@ -31,6 +32,7 @@ return {
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
         ['<Tab>'] = cmp.mapping.confirm({ select = true }),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
       }),
       sources = cmp.config.sources({
         { name = 'nvim_lsp' },
@@ -59,6 +61,15 @@ return {
       capabilities = capabilities,
     }
 
+    -- Setup null-ls for formatting with black
+    local null_ls = require('null-ls')
+
+    null_ls.setup({
+      sources = {
+        null_ls.builtins.formatting.black,  -- Add black as a formatter
+      },
+    })
+
     -- LSP keybindings setup
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('UserLspConfig', {}),
@@ -76,4 +87,3 @@ return {
     })
   end
 }
-
