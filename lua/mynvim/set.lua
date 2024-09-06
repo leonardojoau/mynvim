@@ -1,32 +1,39 @@
-vim.opt.mouse = 'a'
+-- General Settings
+vim.opt.fileformat = "unix"          -- Use Unix-style line endings
+vim.opt.mouse = 'a'                  -- Enable mouse support in all modes
+vim.opt.guicursor = ""               -- Use default GUI cursor
 
-vim.opt.guicursor = ""
+-- Line Numbers
+vim.opt.nu = true                    -- Enable absolute line numbers
+vim.opt.relativenumber = true        -- Enable relative line numbers
 
-vim.opt.nu = true
-vim.opt.relativenumber = true
+-- Tabs and Indentation
+vim.opt.tabstop = 4                  -- Number of spaces per tab
+vim.opt.softtabstop = 4              -- Spaces per tab in insert mode
+vim.opt.shiftwidth = 4               -- Spaces per indentation level
+vim.opt.expandtab = true             -- Convert tabs to spaces
+vim.opt.smartindent = true           -- Automatically indent new lines
 
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
+-- Text Wrapping
+vim.opt.wrap = false                 -- Disable line wrapping
 
-vim.opt.smartindent = true
+-- File Management
+vim.opt.swapfile = false             -- Disable swap file creation
+vim.opt.backup = false               -- Disable backup file creation
+vim.opt.undofile = true              -- Enable persistent undo
 
-vim.opt.wrap = false
+-- Search Settings
+vim.opt.hlsearch = true              -- Highlight search results
+vim.opt.incsearch = true             -- Enable incremental search
 
-vim.opt.swapfile = false
-vim.opt.backup = false
-vim.opt.undofile = true
+-- Appearance
+vim.opt.termguicolors = true         -- Enable true color support
+vim.opt.colorcolumn = "80"           -- Highlight column 80 for line length
 
-vim.opt.hlsearch = true
-vim.opt.incsearch = true
+-- Scrolling and Buffer Behavior
+vim.opt.scrolloff = 8                -- Keep 8 lines visible when scrolling
+vim.opt.signcolumn = "yes"           -- Always show the sign column
+vim.opt.isfname:append("@-@")        -- Append '@-@' to 'isfname' option
 
-vim.opt.termguicolors = true
-
-vim.opt.scrolloff = 8
-vim.opt.signcolumn = "yes"
-vim.opt.isfname:append("@-@")
-
-vim.opt.updatetime = 50
-
-vim.opt.colorcolumn = "80"
+-- Performance
+vim.opt.updatetime = 50              -- Faster completion (default is 4000ms)
