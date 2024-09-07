@@ -3,7 +3,7 @@ return {
   dependencies = {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
-    'hrsh7th/nvim-cmp',               -- nvim-cmp for autocompletion
+    'hrsh7th/nvim-cmp',                -- nvim-cmp for autocompletion
     'hrsh7th/cmp-nvim-lsp',            -- LSP source for nvim-cmp
     'L3MON4D3/LuaSnip',                -- LuaSnip for snippet support (optional)
     'saadparwaiz1/cmp_luasnip',        -- LuaSnip source for nvim-cmp (optional)
@@ -49,6 +49,12 @@ return {
     -- Setup Python LSP (Pyright)
     lspconfig.pyright.setup {
       capabilities = capabilities,
+      on_init = function(client)
+        -- Get the Poetry virtual environment path
+        local venv_path = vim.fn.trim(vim.fn.system('poetry env info --path'))
+        client.config.settings.python.pythonPath = venv_path .. "/bin/python"
+        client.notify("workspace/didChangeConfiguration")
+      end
     }
 
     -- Setup Rust LSP (rust-analyzer)
