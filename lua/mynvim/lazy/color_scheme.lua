@@ -1,27 +1,56 @@
 return {
     {
-        "ellisonleao/gruvbox.nvim",
-        lazy = false,
-        priority = 1000,
+        "catppuccin/nvim",
+        name = "catppuccin",  -- Assign a name to the plugin
+        lazy = false,         -- Load the plugin immediately
+        priority = 1000,      -- Ensure the theme loads first
         config = function()
-            -- Set gruvbox options for a brighter theme
-            vim.g.gruvbox_material_background = 'hard'  -- Use 'hard' for high contrast
-            vim.g.gruvbox_material_better_performance = 1  -- Improves performance with some trade-offs
-            vim.g.gruvbox_material_foreground = 'material'  -- Use brighter, more material-like colors
-            
-            -- Optionally, you can try other configurations for lighter colors
-            -- vim.g.gruvbox_material_foreground = 'mix'  -- For a mix between the original and material colors
+            require("catppuccin").setup({
+                flavour = "mocha",  -- Choose your preferred flavour: latte, frappe, macchiato, mocha
+                background = {
+                    light = "latte",  -- Set the light background flavour
+                    dark = "mocha",   -- Set the dark background flavour
+                },
+                transparent_background = true,  -- Enable transparency
+                show_end_of_buffer = false,     -- Do not show `~` characters after the end of buffers
+                term_colors = true,             -- Enable terminal colors
+                dim_inactive = {
+                    enabled = false,             -- Disable dimming of inactive windows
+                    shade = "dark",
+                    percentage = 0.15,
+                },
+                no_italic = false,               -- Disable italic style
+                no_bold = false,                 -- Disable bold style
+                styles = {
+                    comments = { "italic" },     -- Style for comments
+                    conditionals = { "italic" }, -- Style for conditionals
+                    loops = {},                  -- Style for loops
+                    functions = {},              -- Style for functions
+                    keywords = {},               -- Style for keywords
+                    strings = {},                -- Style for strings
+                    variables = {},              -- Style for variables
+                    numbers = {},                -- Style for numbers
+                    booleans = {},               -- Style for booleans
+                    properties = {},             -- Style for properties
+                    types = {},                  -- Style for types
+                    operators = {},              -- Style for operators
+                },
+                integrations = {
+                    cmp = true,                  -- Enable integration with nvim-cmp
+                    gitsigns = true,             -- Enable integration with gitsigns.nvim
+                    nvimtree = true,             -- Enable integration with nvim-tree.lua
+                    telescope = true,            -- Enable integration with telescope.nvim
+                    treesitter = true,           -- Enable integration with nvim-treesitter
+                    notify = false,              -- Disable integration with notify.nvim
+                },
+            })
 
-            -- Enable transparency
-            vim.g.gruvbox_material_transparent_background = 1
-            
-            -- Apply the gruvbox theme
-            vim.cmd([[colorscheme gruvbox]])
+            -- Apply the Catppuccin theme
+            vim.cmd([[colorscheme catppuccin]])
 
-            -- Remove the background to enable transparency
+            -- Remove the background to ensure transparency (if needed)
             vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
             vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
         end
     }
 }
-
