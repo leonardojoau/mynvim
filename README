@@ -1,4 +1,4 @@
-Add to your `~/.tmux.conf` file:
+`tmux.conf` file:
 
 bind -n C-h select-pane -L
 bind -n C-j select-pane -D
