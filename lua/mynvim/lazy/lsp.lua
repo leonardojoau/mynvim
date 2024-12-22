@@ -3,17 +3,18 @@ return {
   dependencies = {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
-    'hrsh7th/nvim-cmp',                -- nvim-cmp for autocompletion
-    'hrsh7th/cmp-nvim-lsp',            -- LSP source for nvim-cmp
-    'L3MON4D3/LuaSnip',                -- LuaSnip for snippet support (optional)
-    'saadparwaiz1/cmp_luasnip',        -- LuaSnip source for nvim-cmp (optional)
-    'jose-elias-alvarez/null-ls.nvim', -- Add null-ls.nvim here
+    'hrsh7th/nvim-cmp',
+    'hrsh7th/cmp-nvim-lsp',
+    'L3MON4D3/LuaSnip',
+    'saadparwaiz1/cmp_luasnip',
+    'jose-elias-alvarez/null-ls.nvim',
+    'b0o/schemastore.nvim',
   },
   config = function()
     -- Setup Mason and ensure 'pyright', 'rust_analyzer', and 'clangd' are installed
     require("mason").setup()
     require("mason-lspconfig").setup({
-      ensure_installed = { "pyright", "rust_analyzer", "clangd" }
+      ensure_installed = { "pyright", "rust_analyzer", "clangd", "jsonls" }
     })
 
     -- Setup nvim-cmp for autocompletion
@@ -66,6 +67,19 @@ return {
     lspconfig.clangd.setup {
       capabilities = capabilities,
     }
+
+    -- Setup json LSP
+
+    lspconfig.jsonls.setup({
+        cmd = { "vscode-json-language-server", "--stdio" },
+        settings = {
+            json = {
+                schemas = require('schemastore').json.schemas(),
+                validate = { enable = true },
+            },
+        },
+        filetypes = { "json", "jsonc" },
+    })
 
     -- Setup null-ls for formatting with black
     local null_ls = require('null-ls')
