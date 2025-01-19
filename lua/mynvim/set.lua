@@ -1,6 +1,12 @@
 vim.opt.fileformat = "unix"
 vim.opt.mouse = 'a'
-vim.opt.guicursor = ""
+
+vim.opt.guicursor = {
+    "n-v-c:block",
+    "i-ci:ver25",
+    "r-cr:hor20",
+    "o:hor50",
+}
 
 vim.opt.nu = true
 vim.opt.relativenumber = true
