@@ -11,13 +11,11 @@ return {
     'b0o/schemastore.nvim',
   },
   config = function()
-    -- Setup Mason and ensure 'pyright', 'rust_analyzer', and 'clangd' are installed
     require("mason").setup()
     require("mason-lspconfig").setup({
       ensure_installed = { "pyright", "rust_analyzer", "clangd", "jsonls" }
     })
 
-    -- Setup nvim-cmp for autocompletion
     local cmp = require('cmp')
     local luasnip = require('luasnip')
 
@@ -43,32 +41,25 @@ return {
       })
     })
 
-    -- LSPConfig
     local lspconfig = require('lspconfig')
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-    -- Setup Python LSP (Pyright)
     lspconfig.pyright.setup {
       capabilities = capabilities,
       on_init = function(client)
-        -- Get the Poetry virtual environment path
         local venv_path = vim.fn.trim(vim.fn.system('poetry env info --path'))
         client.config.settings.python.pythonPath = venv_path .. "/bin/python"
         client.notify("workspace/didChangeConfiguration")
       end
     }
 
-    -- Setup Rust LSP (rust-analyzer)
     lspconfig.rust_analyzer.setup {
       capabilities = capabilities,
     }
 
-    -- Setup C/C++ LSP (clangd)
     lspconfig.clangd.setup {
       capabilities = capabilities,
     }
-
-    -- Setup json LSP
 
     lspconfig.jsonls.setup({
         cmd = { "vscode-json-language-server", "--stdio" },
@@ -81,16 +72,16 @@ return {
         filetypes = { "json", "jsonc" },
     })
 
-    -- Setup null-ls for formatting with black
     local null_ls = require('null-ls')
 
     null_ls.setup({
       sources = {
-        null_ls.builtins.formatting.black,  -- Add black as a formatter
+        null_ls.builtins.formatting.black.with({
+          command = vim.fn.trim(vim.fn.system('poetry env info --path')) .. "/bin/black",
+        }),
       },
     })
 
-    -- LSP keybindings setup
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('UserLspConfig', {}),
       callback = function(ev)
