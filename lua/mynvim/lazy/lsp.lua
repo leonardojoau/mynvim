@@ -15,11 +15,11 @@ return {
 		require("mason").setup()
 
 		require("mason-lspconfig").setup({
-			ensure_installed = { "pyright", "rust_analyzer", "clangd" },
+			ensure_installed = { "pyright", "rust_analyzer", "clangd", "html" },
 		})
 
 		require("mason-null-ls").setup({
-			ensure_installed = { "stylua", "black", "jq" },
+			ensure_installed = { "stylua", "black", "jq", "prettier", "sqlfluff" },
 			automatic_installation = true,
 		})
 
@@ -71,6 +71,10 @@ return {
 			cmd = { mason_path .. "clangd" },
 		})
 
+		lspconfig.html.setup({
+			capabilities = capabilities,
+		})
+
 		local null_ls = require("null-ls")
 
 		null_ls.setup({
@@ -80,6 +84,13 @@ return {
 				null_ls.builtins.formatting.jq.with({
 					command = mason_path .. "jq",
 					args = { "." },
+				}),
+				null_ls.builtins.formatting.prettier.with({
+					filetypes = { "html" },
+				}),
+				null_ls.builtins.formatting.sqlfluff.with({
+					extra_args = { "--dialect", "sqlite" },
+					filetypes = { "sql" },
 				}),
 			},
 		})
