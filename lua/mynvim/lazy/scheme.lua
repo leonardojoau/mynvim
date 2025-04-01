@@ -1,53 +1,47 @@
 return {
 	{
-		"catppuccin/nvim",
-		name = "catppuccin",
-		lazy = false,
+		"loctvl842/monokai-pro.nvim",
 		config = function()
-			require("catppuccin").setup({
-				flavour = "mocha",
-				background = {
-					light = "latte",
-					dark = "mocha",
-				},
-				transparent_background = true,
-				show_end_of_buffer = false,
-				term_colors = true,
-				dim_inactive = {
-					enabled = false,
-					shade = "dark",
-					percentage = 0.15,
-				},
-				no_italic = false,
-				no_bold = false,
+			require("monokai-pro").setup({
+				transparent_background = false,
+				terminal_colors = true,
+				devicons = true,
 				styles = {
-					comments = { "italic" },
-					conditionals = { "italic" },
-					loops = {},
-					functions = {},
-					keywords = {},
-					strings = {},
-					variables = {},
-					numbers = {},
-					booleans = {},
-					properties = {},
-					types = {},
-					operators = {},
+					comment = { italic = true },
+					keyword = { italic = true },
+					type = { italic = true },
+					storageclass = { italic = true },
+					structure = { italic = true },
+					parameter = { italic = true },
+					annotation = { italic = true },
+					tag_attribute = { italic = true },
 				},
-				integrations = {
-					cmp = true,
-					gitsigns = true,
-					nvimtree = true,
-					telescope = true,
-					treesitter = true,
-					notify = false,
+				filter = "pro",
+				day_night = {
+					enable = false,
+					day_filter = "pro",
+					night_filter = "spectrum",
 				},
+				inc_search = "background",
+				background_clear = {
+					"toggleterm",
+					"telescope",
+					"renamer",
+					"notify",
+				},
+				plugins = {
+					bufferline = {
+						underline_selected = false,
+						underline_visible = false,
+					},
+					indent_blankline = {
+						context_highlight = "default",
+						context_start_underline = false,
+					},
+				},
+				override = function(cs, p, Config, hp) end,
 			})
-
-			vim.cmd([[colorscheme catppuccin]])
-
-			vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-			vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+			vim.cmd("colorscheme monokai-pro")
 		end,
 	},
 }
