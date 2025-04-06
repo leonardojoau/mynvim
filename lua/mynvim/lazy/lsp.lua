@@ -15,11 +15,11 @@ return {
 		require("mason").setup()
 
 		require("mason-lspconfig").setup({
-			ensure_installed = { "pyright", "rust_analyzer", "clangd", "html" },
+			ensure_installed = { "pyright", "rust_analyzer", "clangd", "html", "rnix" },
 		})
 
 		require("mason-null-ls").setup({
-			ensure_installed = { "stylua", "black", "jq", "prettier", "sqlfluff" },
+			ensure_installed = { "stylua", "black", "jq", "prettier", "sqlfluff", "nixpkgs_fmt" },
 			automatic_installation = true,
 		})
 
@@ -75,6 +75,11 @@ return {
 			capabilities = capabilities,
 		})
 
+		lspconfig.rnix.setup({
+			capabilities = capabilities,
+			cmd = { mason_path .. "rnix-lsp" },
+		})
+
 		local null_ls = require("null-ls")
 
 		null_ls.setup({
@@ -92,6 +97,15 @@ return {
 					extra_args = { "--dialect", "sqlite" },
 					filetypes = { "sql" },
 				}),
+				{
+					method = null_ls.methods.FORMATTING,
+					filetypes = { "nix" },
+					generator = null_ls.formatter({
+						command = "nixpkgs-fmt",
+						args = {},
+						to_stdin = true,
+					}),
+				},
 			},
 		})
 
